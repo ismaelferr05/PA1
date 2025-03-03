@@ -12,7 +12,7 @@ import java.util.List;
 public class CSV {
 
     public Table readTable(String fileName) throws IOException {
-
+        String filePath=getClass().getClassLoader().getResource(fileName).toURI().getPath();
         Table table = new Table();
         try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
             String line;
