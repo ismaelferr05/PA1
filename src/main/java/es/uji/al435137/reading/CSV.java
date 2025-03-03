@@ -11,10 +11,10 @@ import java.util.List;
 
 public class CSV {
 
-    public Table readTable(String fileName) throws IOException {
+    public Table readTable(String fileName) throws IOException, URISyntaxException {
         String filePath=getClass().getClassLoader().getResource(fileName).toURI().getPath();
         Table table = new Table();
-        try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String line;
             boolean firstLine = true;
             while ((line = br.readLine()) != null) {
@@ -35,10 +35,11 @@ public class CSV {
         return table;
     }
 
-    // Método para leer un archivo CSV con etiquetas en la última columna
-    public TableWithLabels readTableWithLabels(String fileName) throws IOException {
+    public TableWithLabels readTableWithLabels(String fileName) throws IOException, URISyntaxException {
+        String filePath=getClass().getClassLoader().getResource(fileName).toURI().getPath();
+
         TableWithLabels table = new TableWithLabels();
-        try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String line;
             boolean firstLine = true;
             while ((line = br.readLine()) != null) {
@@ -63,4 +64,5 @@ public class CSV {
         return table;
     }
 }
+
 

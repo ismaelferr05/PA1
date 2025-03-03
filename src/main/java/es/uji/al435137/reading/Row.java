@@ -6,12 +6,8 @@ import java.util.List;
 public class Row {
     protected List<Double> items;
 
-    public Row(){
-        items = new ArrayList<>();
-    }
-
     public Row(List<Double> items){
-        items = new ArrayList<>();
+        this.items = items;
     }
 
     public List<Double> getData(){

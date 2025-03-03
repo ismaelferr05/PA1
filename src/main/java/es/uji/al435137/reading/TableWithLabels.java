@@ -20,6 +20,7 @@ public class TableWithLabels extends Table {
     public void insertLabelToIndex(String label){
         labelsToIndex.put(label,labelsToIndex.size());
     }
+
     public Integer getLabelAsInteger(String label) {
         if (!labelsToIndex.containsKey(label)) {
             labelsToIndex.put(label, labelsToIndex.size());

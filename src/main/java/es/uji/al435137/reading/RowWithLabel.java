@@ -5,9 +5,6 @@ import java.util.List;
 public class RowWithLabel extends Row {
     protected String label;
 
-    public RowWithLabel(){
-        super();
-    }
 
     public RowWithLabel(List<Double> items, String label){
         super(items);

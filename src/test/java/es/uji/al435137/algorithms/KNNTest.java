@@ -1,4 +1,3 @@
-// TODO: Reemplazar por el nombre de tu paquete
 package es.uji.al435137.algorithms;
 
 // TODO: Reemplazar por los imports de tu proyecto
@@ -13,6 +12,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -23,7 +23,7 @@ class KNNTest {
     private KNN knn;
 
     @BeforeEach
-    void setUp() throws IOException {
+    void setUp() throws IOException, URISyntaxException {
         TableWithLabels iris = new CSV().readTableWithLabels("iris.csv");
         knn = new KNN();
         knn.train(iris);

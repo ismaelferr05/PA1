@@ -15,13 +15,17 @@ public class Table {
     public Row getRowAt(int rowNumber) {
         return rows.get(rowNumber);
     }
+
     public List<Double> getColumnAt(int index) {
         List<Double> column = new ArrayList<>();
         for (Row row : rows) {
-            column.add(row.getData().get(index));
+            if (row.getData() != null && index < row.getData().size()) {
+                column.add(row.getData().get(index));
+            }
         }
         return column;
     }
+
 
     public void addHeader(String header){
         this.headers.add(header);

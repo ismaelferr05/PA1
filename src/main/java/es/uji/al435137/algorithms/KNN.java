@@ -8,9 +8,18 @@ import java.util.List;
 
 public class KNN {
     private TableWithLabels trainingData;
+    private final int k = 1;
+
+    public KNN() {
+        trainingData = new TableWithLabels();
+    }
 
     public void train(TableWithLabels data) {
         this.trainingData = data;
+        for (Row row : trainingData.getRows()) {
+            RowWithLabel r = (RowWithLabel) row;
+            trainingData.getLabelAsInteger(r.getLabel());
+        }
     }
 
     public Integer estimate(List<Double> sample) {
@@ -30,12 +39,11 @@ public class KNN {
             }
         }
 
-        if(nearestRow==null){
+        if (nearestRow == null) {
             return null;
-        }else{
+        } else {
             return trainingData.getLabelAsInteger(nearestRow.getLabel());
         }
-
     }
 
     private double euclideanDistance(List<Double> a, List<Double> b) {
@@ -46,6 +54,3 @@ public class KNN {
         return Math.sqrt(sum);
     }
 }
-
-
-

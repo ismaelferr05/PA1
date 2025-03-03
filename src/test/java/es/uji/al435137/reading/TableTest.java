@@ -1,9 +1,4 @@
-// TODO: Reemplazar por el nombre de tu paquete
 package es.uji.al435137.reading;
-
-// TODO: Reemplazar por los imports de tu proyecto
-import es.uji.al435137.reading.Row;
-import es.uji.al435137.reading.Table;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
