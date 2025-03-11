@@ -27,9 +27,6 @@ public class Table {
     }
 
 
-    public void addHeader(String header){
-        this.headers.add(header);
-    }
     public void addRow(Row row){
         rows.add(row);
     }
@@ -39,10 +36,6 @@ public class Table {
 
     public void setHeaders(List<String>headers){
         this.headers=headers;
-    }
-
-    public List<Row> getRows(){
-        return rows;
     }
 
     public int getRowCount(){
