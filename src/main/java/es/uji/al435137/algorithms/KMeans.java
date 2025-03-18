@@ -1,6 +1,7 @@
 package es.uji.al435137.algorithms;
 
 import es.uji.al435137.reading.Table;
+import es.uji.al435137.exceptions.InvalidClusterNumberException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +24,9 @@ public class KMeans implements Algorithm<Table, Integer, List<Double>> {
         List<List<Double>> points = new ArrayList<>();
         for (int i = 0; i < data.getRowCount(); i++) {
             points.add(data.getRowAt(i).getData());
+        }
+        if (numClusters > data.getRowCount()) {
+            throw new InvalidClusterNumberException(numClusters, data.getRowCount());
         }
 
         Random rnd = new Random(seed);

@@ -1,10 +1,10 @@
-// TODO: Remplazar <nombre> por el nombre de tu paquete
 package es.uji.al435137.algorithms;
 
-// TODO: Pon los imports especificos a tu proyecto
 
+import es.uji.al435137.exceptions.LikedItemNotFoundException;
 import es.uji.al435137.reading.CSV;
 import es.uji.al435137.reading.Table;
+import es.uji.al435137.recommend.RecSys;
 import org.junit.jupiter.api.*;
 
 import java.io.File;
@@ -19,8 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class RecSysTest {
 
     private String separator = System.getProperty("file.separator");
-    // TODO: cambiar ruta si hace falta
-    private String songsFolder = "recommender";
+    private String songsFolder = "recommends";
 
     private RecSys recSys;
     private Algorithm algorithm;

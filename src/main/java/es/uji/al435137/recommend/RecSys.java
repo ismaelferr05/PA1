@@ -1,6 +1,7 @@
-package es.uji.al435137.algorithms;
+package es.uji.al435137.recommend;
+import es.uji.al435137.algorithms.Algorithm;
 import es.uji.al435137.reading.Table;
-import es.uji.al435137.reading.TableWithLabels;
+import es.uji.al435137.exceptions.LikedItemNotFoundException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +38,7 @@ public class RecSys<T extends Table, G, H> {
     public List<String> recommend(String nameLikedItem, int numRecommendations) {
         int indexLikedItem = testItemNames.indexOf(nameLikedItem);
         if (indexLikedItem == -1) {
-            throw new IllegalArgumentException("Nombre no encontrado");
+            throw new LikedItemNotFoundException(nameLikedItem);
         }
         G likedPrediction = predictions.get(indexLikedItem);
 
