@@ -25,7 +25,7 @@ public class KNN implements Algorithm<TableWithLabels, Integer, List<Double>>{
     // Lanza una excepción en caso de error
     public Integer estimate(List<Double> sample) {
         if (trainingData == null || trainingData.getRowCount()==0) {
-            throw new IllegalStateException("El modelo no ha sido entrenado aún.");
+            throw new IllegalStateException("El modelo no ha sido entrenado aún");
         }
 
         RowWithLabel nearestRow = null;

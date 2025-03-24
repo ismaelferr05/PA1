@@ -4,7 +4,7 @@ public class LikedItemNotFoundException extends RuntimeException {
     private String itemName;
 
     public LikedItemNotFoundException(String itemName) {
-        super("Liked item not found: " + itemName);
+        super("Elemento marcado como favorito no encontrado: " + itemName);
         this.itemName = itemName;
     }
 

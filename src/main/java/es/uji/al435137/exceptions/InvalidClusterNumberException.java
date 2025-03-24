@@ -5,8 +5,7 @@ public class InvalidClusterNumberException extends RuntimeException {
     private int totalData;
 
     public InvalidClusterNumberException(int numberOfClusters, int totalData) {
-        super("Invalid cluster number: " + numberOfClusters
-                + " (total data: " + totalData + ")");
+        super("Número de clústeres inválido: " + numberOfClusters+ " (total de datos: "+ totalData +")");
         this.numberOfClusters = numberOfClusters;
         this.totalData = totalData;
     }

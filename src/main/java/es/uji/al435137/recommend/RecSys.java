@@ -18,11 +18,12 @@ public class RecSys<T extends Table, G, H> {
         this.algorithm = algorithm;
     }
 
+    //Entrena el modelo con los datos proporcionados
     public void train(Table trainData) {
         algorithm.train((T) trainData);
-
     }
 
+    //Inicializa el sistema de recomendación con datos de prueba y nombres de elementos
     public void initialise(Table testData, List<String> testItemNames) {
         this.testData = (T) testData;
         this.testItemNames = testItemNames;
@@ -35,6 +36,7 @@ public class RecSys<T extends Table, G, H> {
         }
     }
 
+    //Genera recomendaciones basadas en un ítem que le gustó al usuario
     public List<String> recommend(String nameLikedItem, int numRecommendations) {
         int indexLikedItem = testItemNames.indexOf(nameLikedItem);
         if (indexLikedItem == -1) {
