@@ -44,16 +44,16 @@ public class RecSys<T extends Table, G, H> {
         }
         G likedPrediction = predictions.get(indexLikedItem);
 
-        List<String> candidates = new ArrayList<>();
-        for (int i = 0; i < predictions.size(); i++) {
+        List<String> recommendations = new ArrayList<>();
+        int count = 0;
+
+        for (int i = 0; i < predictions.size() && count < numRecommendations; i++) {
             if (i != indexLikedItem && predictions.get(i).equals(likedPrediction)) {
-                candidates.add(testItemNames.get(i));
+                recommendations.add(testItemNames.get(i));
+                count++;
             }
         }
-        if (candidates.size() > numRecommendations) {
-            return candidates.subList(0, numRecommendations);
-        }
-        return candidates;
+        return recommendations;
     }
 
 }
