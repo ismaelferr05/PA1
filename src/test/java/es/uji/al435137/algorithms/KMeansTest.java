@@ -2,7 +2,7 @@ package es.uji.al435137.algorithms;
 
 import es.uji.al435137.algorithms.KMeans;
 import es.uji.al435137.exceptions.InvalidClusterNumberException;
-import es.uji.al435137.reading.CSV;
+import es.uji.al435137.reading.FileReader.CSV;
 import es.uji.al435137.reading.TableWithLabels;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

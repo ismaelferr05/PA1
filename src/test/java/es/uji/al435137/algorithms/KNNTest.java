@@ -1,7 +1,7 @@
 package es.uji.al435137.algorithms;
 
 // TODO: Reemplazar por los imports de tu proyecto
-import es.uji.al435137.reading.CSV;
+import es.uji.al435137.reading.FileReader.CSV;
 import es.uji.al435137.reading.TableWithLabels;
 
 import org.junit.jupiter.api.AfterEach;

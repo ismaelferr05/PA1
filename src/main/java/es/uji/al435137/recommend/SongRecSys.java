@@ -3,7 +3,7 @@ package es.uji.al435137.recommend;
 import es.uji.al435137.algorithms.Algorithm;
 import es.uji.al435137.algorithms.KNN;
 import es.uji.al435137.algorithms.KMeans;
-import es.uji.al435137.reading.CSV;
+import es.uji.al435137.reading.FileReader.CSV;
 import es.uji.al435137.reading.Table;
 import es.uji.al435137.recommend.RecSys;
 

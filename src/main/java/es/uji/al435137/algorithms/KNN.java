@@ -7,6 +7,7 @@ import es.uji.al435137.reading.TableWithLabels;
 import java.util.List;
 
 public class KNN implements Algorithm<TableWithLabels, Integer, List<Double>>{
+    private Distance distance;
     private TableWithLabels trainingData;
     private final int k = 1;
 
