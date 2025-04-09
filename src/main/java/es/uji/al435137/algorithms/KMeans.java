@@ -1,5 +1,7 @@
 package es.uji.al435137.algorithms;
 
+import es.uji.al435137.algorithms.distance.Distance;
+import es.uji.al435137.algorithms.distance.EuclideanDistance;
 import es.uji.al435137.reading.Table;
 import es.uji.al435137.exceptions.InvalidClusterNumberException;
 
@@ -8,12 +10,22 @@ import java.util.List;
 import java.util.Random;
 
 public class KMeans implements Algorithm<Table, Integer, List<Double>> {
+    private Distance distance;
     private int numClusters;
     private int numIterations;
     private long seed;
     private List<List<Double>> centroids;
 
+    public KMeans(Distance distance, int numClusters, int numIterations, long seed) {
+        this.distance=distance;
+        this.numClusters = numClusters;
+        this.numIterations = numIterations;
+        this.seed = seed;
+        this.centroids = new ArrayList<>();
+    }
+
     public KMeans(int numClusters, int numIterations, long seed) {
+        this.distance= new EuclideanDistance();
         this.numClusters = numClusters;
         this.numIterations = numIterations;
         this.seed = seed;
@@ -73,7 +85,7 @@ public class KMeans implements Algorithm<Table, Integer, List<Double>> {
         double minDistance = Double.MAX_VALUE;
 
         for (int i = 0; i < this.centroids.size(); i++) {
-            double distance = euclideanDistance(sample, this.centroids.get(i));
+            double distance = this.distance.calculateDistance(sample, this.centroids.get(i));
             if (distance < minDistance) {
                 minDistance = distance;
                 nearestCentroid = i;

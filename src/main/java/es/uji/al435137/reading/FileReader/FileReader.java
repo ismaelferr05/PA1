@@ -14,7 +14,11 @@ public abstract class FileReader<T extends Table> extends ReaderTemplate<T> {
 
     @Override
     void openSource(String source) throws FileNotFoundException {
-        scanner = new Scanner(new File(source));
+        File file = new File(source);
+        if (!file.exists()) {
+            throw new FileNotFoundException();
+        }
+        scanner = new Scanner(file);
     }
 
     @Override

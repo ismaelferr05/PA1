@@ -1,5 +1,7 @@
 package es.uji.al435137.algorithms;
 
+import es.uji.al435137.algorithms.distance.Distance;
+import es.uji.al435137.algorithms.distance.EuclideanDistance;
 import es.uji.al435137.reading.Row;
 import es.uji.al435137.reading.RowWithLabel;
 import es.uji.al435137.reading.TableWithLabels;
@@ -11,7 +13,14 @@ public class KNN implements Algorithm<TableWithLabels, Integer, List<Double>>{
     private TableWithLabels trainingData;
     private final int k = 1;
 
+    public KNN(Distance distance) {
+        this.distance=distance;
+        trainingData = new TableWithLabels();
+    }
+
+
     public KNN() {
+        this.distance= new EuclideanDistance();
         trainingData = new TableWithLabels();
     }
 
@@ -34,7 +43,7 @@ public class KNN implements Algorithm<TableWithLabels, Integer, List<Double>>{
 
         for (int i =0;i<trainingData.getRowCount();i++) {
             RowWithLabel rowWithLabel = (RowWithLabel) trainingData.getRowAt(i);
-            double distance = euclideanDistance(sample, rowWithLabel.getData());
+            double distance = this.distance.calculateDistance(sample, rowWithLabel.getData());
             if (distance < minDistance) {
                 minDistance = distance;
                 nearestRow = rowWithLabel;
