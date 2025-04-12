@@ -14,8 +14,8 @@ public class CSVLabeledFileReader extends FileReader<TableWithLabels> {
 
     @Override
     void processHeaders(String headers) {
+        this.table=new TableWithLabels();
         List<String> cols = new java.util.ArrayList<>(java.util.List.of(headers.split(",")));
-        // Remove label column
         cols.remove(cols.size() - 1);
         table.setHeaders(cols);
     }

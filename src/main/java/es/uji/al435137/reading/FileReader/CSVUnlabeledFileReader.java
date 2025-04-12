@@ -14,6 +14,7 @@ public class CSVUnlabeledFileReader extends FileReader<Table> {
 
     @Override
     void processHeaders(String headers) {
+        this.table=new Table();
         String[] headerArray = headers.split(",");
         List<String> headerList = new ArrayList<>();
 
