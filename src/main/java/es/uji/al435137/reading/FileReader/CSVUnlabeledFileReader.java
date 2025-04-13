@@ -28,7 +28,7 @@ public class CSVUnlabeledFileReader extends FileReader<Table> {
     @Override
     void processData(String data) {
         String[] values = data.split(",");
-        List<Double> rowData = new java.util.ArrayList<>();
+        List<Double> rowData = new ArrayList<>();
         for (String value : values) {
             rowData.add(Double.parseDouble(value));
         }

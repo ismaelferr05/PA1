@@ -1,8 +1,10 @@
 package es.uji.al435137.algorithms;
 
 import es.uji.al435137.algorithms.KMeans;
+import es.uji.al435137.algorithms.distance.Distance;
+import es.uji.al435137.algorithms.distance.EuclideanDistance;
 import es.uji.al435137.exceptions.InvalidClusterNumberException;
-import es.uji.al435137.reading.FileReader.CSV;
+import es.uji.al435137.reading.FileReader.CSVLabeledFileReader;
 import es.uji.al435137.reading.TableWithLabels;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,8 +28,9 @@ class KMeansTest {
 
     @BeforeEach
     void setUp() throws InvalidClusterNumberException, IOException, URISyntaxException {
-        iris = new CSV().readTableWithLabels("iris.csv");
-        kMeans = new KMeans(irisClusters, numIterations, seed);
+        iris = new CSVLabeledFileReader("iris.csv").readTableFromSource();
+        Distance distance = new EuclideanDistance();
+        kMeans = new KMeans(distance,irisClusters, numIterations, seed);
         kMeans.train(iris);
     }
 

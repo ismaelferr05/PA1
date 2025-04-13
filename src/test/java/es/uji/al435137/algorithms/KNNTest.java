@@ -1,7 +1,10 @@
 package es.uji.al435137.algorithms;
 
 // TODO: Reemplazar por los imports de tu proyecto
-import es.uji.al435137.reading.FileReader.CSV;
+import es.uji.al435137.algorithms.distance.Distance;
+import es.uji.al435137.algorithms.distance.EuclideanDistance;
+
+import es.uji.al435137.reading.FileReader.CSVLabeledFileReader;
 import es.uji.al435137.reading.TableWithLabels;
 
 import org.junit.jupiter.api.AfterEach;
@@ -24,8 +27,9 @@ class KNNTest {
 
     @BeforeEach
     void setUp() throws IOException, URISyntaxException {
-        TableWithLabels iris = new CSV().readTableWithLabels("iris.csv");
-        knn = new KNN();
+        TableWithLabels iris = new CSVLabeledFileReader("iris.csv").readTableFromSource();
+        Distance distance= new EuclideanDistance();
+        knn = new KNN(distance);
         knn.train(iris);
     }
 

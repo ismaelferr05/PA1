@@ -1,11 +1,14 @@
 package es.uji.al435137.recommend;
 
 
+
 import es.uji.al435137.algorithms.Algorithm;
 import es.uji.al435137.algorithms.KMeans;
 import es.uji.al435137.algorithms.KNN;
+import es.uji.al435137.algorithms.distance.Distance;
+import es.uji.al435137.algorithms.distance.EuclideanDistance;
 import es.uji.al435137.exceptions.LikedItemNotFoundException;
-import es.uji.al435137.reading.FileReader.CSV;
+import es.uji.al435137.reading.FileReader.CSVLabeledFileReader;
 import es.uji.al435137.reading.Table;
 import org.junit.jupiter.api.*;
 
@@ -21,6 +24,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class RecSysTest {
 
     private String separator = System.getProperty("file.separator");
+    // TODO: cambiar ruta si hace falta
     private String songsFolder = "recommends";
 
     private RecSys recSys;
@@ -45,12 +49,14 @@ class RecSysTest {
     class KNNRecSys {
 
         @BeforeEach
+            // TODO: añadir o eliminar excepciones según tu implementación
         void setUp() throws IOException, URISyntaxException {
-            trainTable = new CSV().readTableWithLabels(songsFolder + separator + "songs_train.csv");
-            testTable = new CSV().readTableWithLabels(songsFolder + separator + "songs_test.csv");
+            trainTable = new CSVLabeledFileReader(songsFolder + separator + "songs_train.csv").readTableFromSource();
+            testTable = new CSVLabeledFileReader(songsFolder + separator + "songs_test.csv").readTableFromSource();
             testItemNames = readNames(songsFolder + separator + "songs_test_names.csv");
 
-            algorithm = new KNN();
+            Distance distance = new EuclideanDistance();
+            algorithm = new KNN(distance);
             recSys = new RecSys(algorithm);
             recSys.train(trainTable);
             recSys.initialise(testTable, testItemNames);
@@ -89,13 +95,14 @@ class RecSysTest {
         private long seed = 53;
 
         @BeforeEach
-        // TODO: añadir o eliminar excepciones según tu implementación
+            // TODO: añadir o eliminar excepciones según tu implementación
         void setUp() throws IOException, URISyntaxException {
-            trainTable = new CSV().readTableWithLabels(songsFolder + separator + "songs_train_withoutnames.csv");
-            testTable = new CSV().readTableWithLabels(songsFolder + separator + "songs_test_withoutnames.csv");
+            trainTable = new CSVLabeledFileReader(songsFolder + separator + "songs_train_withoutnames.csv").readTableFromSource();
+            testTable = new CSVLabeledFileReader(songsFolder + separator + "songs_test_withoutnames.csv").readTableFromSource();
             testItemNames = readNames(songsFolder + separator + "songs_test_names.csv");
 
-            algorithm = new KMeans(numClusters, numIterations, seed);
+            Distance distance = new EuclideanDistance();
+            algorithm = new KMeans(distance,numClusters, numIterations, seed);
             recSys = new RecSys(algorithm);
             recSys.train(trainTable);
             recSys.initialise(testTable, testItemNames);
