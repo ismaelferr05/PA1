@@ -1,4 +1,4 @@
-package es.uji.al435137.exceptions;
+package es.uji.al435137.algorithms;
 
 public class InvalidClusterNumberException extends RuntimeException {
     private int numberOfClusters;

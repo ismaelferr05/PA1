@@ -12,6 +12,7 @@ public abstract class FileReader<T extends Table> extends ReaderTemplate<T> {
         super(source);
     }
 
+    //Método para abrir la fuente de datos
     @Override
     void openSource(String source) throws FileNotFoundException {
         File file = new File(source);
@@ -21,6 +22,7 @@ public abstract class FileReader<T extends Table> extends ReaderTemplate<T> {
         scanner = new Scanner(file);
     }
 
+    //Método para cerrar la fuente de datos
     @Override
     void closeSource() {
         if (scanner != null) {
@@ -28,11 +30,13 @@ public abstract class FileReader<T extends Table> extends ReaderTemplate<T> {
         }
     }
 
+    //Indica si hay mas lineas por leer en el archivo
     @Override
     boolean hasMoreData() {
         return scanner.hasNextLine();
     }
 
+    //Obtiene la siguiente línea del archivo
     @Override
     String getNextData() {
         return scanner.nextLine();

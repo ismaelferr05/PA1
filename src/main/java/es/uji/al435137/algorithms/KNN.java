@@ -9,7 +9,7 @@ import es.uji.al435137.reading.TableWithLabels;
 import java.util.List;
 
 public class KNN implements Algorithm<TableWithLabels, Integer, List<Double>>{
-    private Distance distance;
+    private Distance distance; //Distancia calculada ya sea de la manera euclidiana como de la manera Manhattan
     private TableWithLabels trainingData;
     private final int k = 1;
 
@@ -17,7 +17,6 @@ public class KNN implements Algorithm<TableWithLabels, Integer, List<Double>>{
         this.distance=distance;
         trainingData = new TableWithLabels();
     }
-
 
     public KNN() {
         this.distance= new EuclideanDistance();
@@ -27,7 +26,7 @@ public class KNN implements Algorithm<TableWithLabels, Integer, List<Double>>{
     public void train(TableWithLabels data) {
         this.trainingData = data;
         for (int i =0;i<trainingData.getRowCount();i++) {
-            RowWithLabel r = (RowWithLabel) trainingData.getRowAt(i);
+            RowWithLabel r = trainingData.getRowAt(i);
             trainingData.getLabelAsInteger(r.getLabel());
         }
     }
@@ -57,13 +56,5 @@ public class KNN implements Algorithm<TableWithLabels, Integer, List<Double>>{
         }
     }
 
-    // Abstracción para calcular la distancia
-    private double euclideanDistance(List<Double> a, List<Double> b) {
-        double sum = 0;
-        for (int i = 0; i < a.size(); i++) {
-            sum += Math.pow(a.get(i) - b.get(i), 2);
-        }
-        return Math.sqrt(sum);
-    }
 
 }

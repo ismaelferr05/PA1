@@ -22,9 +22,8 @@ public abstract class ReaderTemplate<T extends Table> {
     abstract String getNextData();
 
 
-    // El siguiente método llama abre el recurso, inserta las cabeceras, lee e inserta los datos y finalmente cierra el recurso
+    // El siguiente método abre el recurso, inserta las cabeceras, lee e inserta los datos y finalmente cierra el recurso
     public final T readTableFromSource() throws FileNotFoundException, URISyntaxException {
-
         openSource(getClass().getClassLoader().getResource(source).toURI().getPath());
 
         if (hasMoreData())

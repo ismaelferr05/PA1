@@ -3,14 +3,11 @@ package es.uji.al435137.algorithms;
 import es.uji.al435137.algorithms.distance.Distance;
 import es.uji.al435137.algorithms.distance.EuclideanDistance;
 import es.uji.al435137.reading.Table;
-import es.uji.al435137.exceptions.InvalidClusterNumberException;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class KMeans implements Algorithm<Table, Integer, List<Double>> {
-    private Distance distance;
+    private Distance distance; //Distancia calculada ya sea de la manera euclidiana como de la manera Manhattan
     private int numClusters;
     private int numIterations;
     private long seed;
@@ -42,11 +39,25 @@ public class KMeans implements Algorithm<Table, Integer, List<Double>> {
             throw new InvalidClusterNumberException(this.numClusters, data.getRowCount());
         }
 
-        Random random = new Random(seed);
-        for (int i = 0; i < this.numClusters; i++) {
-            this.centroids.add(new ArrayList<>(points.get(random.nextInt(points.size()))));
-        }
+        initializeCentroids(points);
+        runIterations(points);
+    }
 
+    //Inicializa los centroides seleccionando puntos aleatorios distintos del conjunto de datos
+    private void initializeCentroids(List<List<Double>> points){
+        Random random = new Random(seed);
+        Set<Integer> chosenIndices = new HashSet<>();
+        while (this.centroids.size() < this.numClusters) {
+            int index = random.nextInt(points.size());
+            if (!chosenIndices.contains(index)) {
+                chosenIndices.add(index);
+                this.centroids.add(new ArrayList<>(points.get(index)));
+            }
+        }
+    }
+
+    //Se llevan a cabo las iteraciones que asignan puntos a clusters y actualizan centroides
+    private void runIterations(List<List<Double>> points){
         for (int iter = 0; iter < this.numIterations; iter++) {
             List<List<List<Double>>> clusters = new ArrayList<>();
             for (int i = 0; i < this.numClusters; i++) {
@@ -94,14 +105,4 @@ public class KMeans implements Algorithm<Table, Integer, List<Double>> {
 
         return nearestCentroid;
     }
-
-    //Calcula la distancia euclidiana entre dos puntos
-    private double euclideanDistance(List<Double> point1, List<Double> point2) {
-        double sum = 0;
-        for (int i = 0; i < point1.size(); i++) {
-            sum += Math.pow(point1.get(i) - point2.get(i), 2);
-        }
-        return Math.sqrt(sum);
-    }
-
 }

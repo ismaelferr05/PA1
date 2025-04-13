@@ -1,7 +1,7 @@
 package es.uji.al435137.recommend;
 import es.uji.al435137.algorithms.Algorithm;
 import es.uji.al435137.reading.Table;
-import es.uji.al435137.exceptions.LikedItemNotFoundException;
+import es.uji.al435137.algorithms.LikedItemNotFoundException;
 
 import java.util.ArrayList;
 import java.util.List;

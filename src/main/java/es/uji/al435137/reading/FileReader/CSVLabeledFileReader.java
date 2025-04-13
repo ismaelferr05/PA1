@@ -13,6 +13,8 @@ public class CSVLabeledFileReader extends FileReader<TableWithLabels> {
         super(source);
     }
 
+    //Procesa la primera linea del archivo CSV, que contiene los encabezados (headers)
+
     @Override
     void processHeaders(String headers) {
         this.table=new TableWithLabels();
@@ -21,6 +23,7 @@ public class CSVLabeledFileReader extends FileReader<TableWithLabels> {
         table.setHeaders(cols);
     }
 
+    //Procesa cada linea de datos del archivo CSV
     @Override
     void processData(String data) {
         String[] values = data.split(",");
