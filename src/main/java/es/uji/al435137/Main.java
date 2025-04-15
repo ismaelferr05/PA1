@@ -26,6 +26,6 @@ public class Main extends Application {
         controlador.setModelo(modelo);
         controlador.setVista(vista);
 
-        vista.createGUI(stage);
+        vista.createGUI(primaryStage);
     }
 }
