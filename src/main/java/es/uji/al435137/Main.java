@@ -1,6 +1,6 @@
 package es.uji.al435137;
 
-import es.uji.al435137.mvc.controlator.ControllerImplementation;
+import es.uji.al435137.mvc.controller.ControllerImplementation;
 import es.uji.al435137.mvc.model.ModelImplementation;
 import es.uji.al435137.mvc.view.ViewImplementation;
 import javafx.application.Application;
@@ -14,18 +14,18 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        ViewImplementation vista = new ViewImplementation();
-        ModelImplementation modelo = new ModelImplementation();
-        ControllerImplementation controlador = new ControllerImplementation();
+        ViewImplementation view = new ViewImplementation();
+        ModelImplementation model = new ModelImplementation();
+        ControllerImplementation controller = new ControllerImplementation();
 
-        vista.setControlador(controlador);
-        vista.setModelo(modelo);
+        model.setVista(view);
 
-        modelo.setVista(vista);
+        view.setControlador(controller);
+        view.setModelo(model);
 
-        controlador.setModelo(modelo);
-        controlador.setVista(vista);
+        controller.setModelo(model);
+        controller.setVista(view);
 
-        vista.createGUI(primaryStage);
+        view.createGUI(primaryStage);
     }
 }

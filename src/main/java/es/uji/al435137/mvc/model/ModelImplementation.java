@@ -3,10 +3,14 @@ package es.uji.al435137.mvc.model;
 import es.uji.al435137.mvc.view.View;
 
 public class ModelImplementation implements Model {
-    private View vista;
+    private View view;
+
+    public ModelImplementation(){
+
+    }
 
     public void setVista(View vista) {
-        this.vista = vista;
+        this.view = vista;
     }
 
     @Override
