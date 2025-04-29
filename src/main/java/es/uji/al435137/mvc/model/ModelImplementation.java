@@ -24,4 +24,14 @@ public class ModelImplementation implements Model {
         System.out.println("Generando más recomendaciones...");
         // Lógica específica para generar recomendaciones
     }
+
+    @Override
+    public void setAlgorithm(int tipoAlgoritmo, int tipoDistancia) {
+
+    }
+
+    @Override
+    public void calculateRecommendations(String cancion, int i) {
+
+    }
 }

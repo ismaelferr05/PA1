@@ -10,4 +10,6 @@ public interface View {
     public void setModelo(Model modelo);
 
     public void createGUI(Stage stage);
+
+
 }
