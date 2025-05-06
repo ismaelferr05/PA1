@@ -20,10 +20,11 @@ public class ControllerImplementation implements Controller {
     public void trainRecommendations() {
         int tipoAlgoritmo = view.getAlgorithm();
         int tipoDistancia = view.getDistance();
+        int amount = view.getRecommendationsAmount();
         String cancion = view.getSelectedSong();
         try {
             model.setAlgorithm(tipoAlgoritmo, tipoDistancia);
-            model.calculateRecommendations(cancion, 30);
+            model.calculateRecommendations(cancion, amount);
         } catch (Exception e) {
             e.printStackTrace();
         }

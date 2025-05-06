@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.collections.ObservableList;
 
 public class ViewImplementation implements View {
     private Controller controller;
@@ -15,7 +16,9 @@ public class ViewImplementation implements View {
     private ChoiceBox<String> distanceChoice;
     private TextField amountField;
     private Button trainButton;
-    private Label resultLabel;
+    private Label statusLabel;
+    private ListView<String> songsListView;
+    private ListView<String> recommendationsListView;
 
     @Override
     public void setControlador(Controller controlador) {
@@ -41,39 +44,59 @@ public class ViewImplementation implements View {
         distanceChoice.setValue("Euclidean");
 
         amountField = new TextField();
-        amountField.setPromptText("Cantidad de canciones");
+        amountField.setPromptText("Number of recommendations");
 
-        trainButton = new Button("Entrenar y Recomendar");
-        trainButton.setOnAction(e -> {
-            controller.trainRecommendations();
-            resultLabel.setText("Entrenamiento y recomendaciones listos");
-        });
+        songsListView = new ListView<>();
+        ObservableList<String> songs = model.getSongsList();
+        songsListView.setItems(songs);
+        songsListView.setMaxHeight(100);
 
-        resultLabel = new Label();
+        trainButton = new Button("Train and Recommend");
+        trainButton.setOnAction(e -> controller.trainRecommendations());
 
-        root.getChildren().addAll(new Label("Algoritmo:"), algorithmChoice,
-                new Label("Distancia:"), distanceChoice,
-                new Label("Cantidad:"), amountField,
-                trainButton, resultLabel);
+        statusLabel = new Label();
 
-        Scene scene = new Scene(root, 300, 250);
-        stage.setTitle("Recomendaciones");
+        recommendationsListView = new ListView<>();
+        recommendationsListView.setMaxHeight(150);
+
+        root.getChildren().addAll(
+                new Label("Algorithm:"), algorithmChoice,
+                new Label("Distance:"), distanceChoice,
+                new Label("Number of recommendations:"), amountField,
+                new Label("Selected song:"), songsListView, trainButton, statusLabel,
+                new Label("Recomendations:"), recommendationsListView
+        );
+
+        Scene scene = new Scene(root, 400, 600);
+        stage.setTitle("Song Recommendation System");
         stage.setScene(scene);
         stage.show();
     }
 
+    @Override
     public int getAlgorithm() {
-        return algorithmChoice.getValue().equals("K-Means") ? 0 : 1;
+        if(algorithmChoice.getValue().equals("K-Means")){
+            return 0;
+        }else{
+            return 1;
+        }
     }
 
+    @Override
     public int getDistance() {
-        return distanceChoice.getValue().equals("Euclidean") ? 0 : 1;
+        if(distanceChoice.getValue().equals("K-Means")){
+            return 0;
+        }else{
+            return 1;
+        }
     }
 
+    @Override
     public String getSelectedSong() {
-        return "EjemploDeCancion";
+        return songsListView.getSelectionModel().getSelectedItem();
     }
 
+    @Override
     public int getRecommendationsAmount() {
         try {
             return Integer.parseInt(amountField.getText());
@@ -82,7 +105,8 @@ public class ViewImplementation implements View {
         }
     }
 
+    @Override
     public void notifyNewRecommendations() {
-        resultLabel.setText("Nuevas recomendaciones disponibles");
+        recommendationsListView.getItems().setAll(model.getRecommendations());
     }
 }

@@ -7,6 +7,7 @@ import es.uji.al435137.algorithms.distance.Distance;
 import es.uji.al435137.algorithms.distance.EuclideanDistance;
 import es.uji.al435137.algorithms.distance.ManhattanDistance;
 import es.uji.al435137.mvc.view.View;
+import es.uji.al435137.reading.FileReader.CSVLabeledFileReader;
 import es.uji.al435137.reading.FileReader.CSVUnlabeledFileReader;
 import es.uji.al435137.reading.FileReader.ReaderTemplate;
 import es.uji.al435137.reading.Table;
@@ -35,8 +36,8 @@ public class ModelImplementation implements Model {
     private RecSys recsys_knnMD;
     private RecSys recsysActual;
 
-    public ModelImplementation() throws FileNotFoundException {
-        songsList = convertFileToObservableList("resources/recommend/songs_test_names.csv");
+    public ModelImplementation() throws FileNotFoundException, URISyntaxException {
+        songsList = convertFileToObservableList("recommends/songs_test_names.csv");
     }
 
     public void setVista(View view) {
@@ -48,9 +49,9 @@ public class ModelImplementation implements Model {
         return songsList;
     }
 
-    private ObservableList<String> convertFileToObservableList(String file) throws FileNotFoundException {
+    private ObservableList<String> convertFileToObservableList(String file) throws FileNotFoundException, URISyntaxException {
         ObservableList<String> listaOutput = FXCollections.observableArrayList();
-        Scanner sc = new Scanner(new File(file));
+        Scanner sc = new Scanner(new File(getClass().getClassLoader().getResource(file).toURI().getPath()));
         while(sc.hasNextLine()){
             listaOutput.add(sc.nextLine());
         }
@@ -59,14 +60,17 @@ public class ModelImplementation implements Model {
     }
 
     public void trainKmeans(Distance d) throws FileNotFoundException, URISyntaxException{
-        ReaderTemplate<Table> lector1 = new CSVUnlabeledFileReader("resources/recomend/songs_train_withoutnames.csv");
-        ReaderTemplate<Table> lector2 = new CSVUnlabeledFileReader("resources/recommend/songs_test_withoutnames.csv");
+        ReaderTemplate<Table> lector1 = new CSVUnlabeledFileReader("recommends/songs_train_withoutnames.csv");
+        ReaderTemplate<Table> lector2 = new CSVUnlabeledFileReader("recommends/songs_test_withoutnames.csv");
         Table trainTable = lector1.readTableFromSource();
         Table testTable = lector2.readTableFromSource();
 
         Algorithm<Table, Integer, List<Double>> kmeans = new KMeans(d, 15, 50, 43422);
         RecSys<Table, Integer, List<Double>> recsys = new RecSys<>(kmeans);
         recsys.train(trainTable);
+
+        List<String> testItemNames = convertFileToList("recommends/songs_test_names.csv");
+        recsys.initialise(testTable, testItemNames);
 
         if (d instanceof EuclideanDistance) {
             recsys_kMeansED = recsys;
@@ -76,14 +80,17 @@ public class ModelImplementation implements Model {
     }
 
     public void trainKnn(Distance d) throws FileNotFoundException, URISyntaxException {
-        ReaderTemplate<Table> lector1 = new CSVUnlabeledFileReader("resources/recommend/songs_train_withoutnames.csv");
-        ReaderTemplate<Table> lector2 = new CSVUnlabeledFileReader("resources/recommend/songs_test_withoutnames.csv");
-        Table trainTable = lector1.readTableFromSource();
+        ReaderTemplate<TableWithLabels> lector1 = new CSVLabeledFileReader("recommends/songs_train.csv");
+        ReaderTemplate<Table> lector2 = new CSVUnlabeledFileReader("recommends/songs_test_withoutnames.csv");
+        TableWithLabels trainTable = lector1.readTableFromSource();
         Table testTable = lector2.readTableFromSource();
 
         Algorithm<TableWithLabels, Integer, List<Double>> knn = new KNN(d);
         RecSys<TableWithLabels, Integer, List<Double>> recsys = new RecSys<>(knn);
-        recsys.train(trainTable);
+        recsys.train( trainTable);
+
+        List<String> testItemNames = convertFileToList("recommends/songs_test_names.csv");
+        recsys.initialise(testTable, testItemNames);
 
         if (d instanceof EuclideanDistance) {
             recsys_knnED = recsys;
@@ -125,9 +132,9 @@ public class ModelImplementation implements Model {
         return recommendationsList;
     }
 
-    private List<String> convertFileToList(String file) throws FileNotFoundException {
+    private List<String> convertFileToList(String file) throws FileNotFoundException, URISyntaxException {
         List<String> listaOutput = new LinkedList<>();
-        Scanner sc = new Scanner(new File(file));
+        Scanner sc = new Scanner(new File(getClass().getClassLoader().getResource(file).toURI().getPath()));
         while(sc.hasNextLine()){
             listaOutput.add(sc.nextLine());
         }
