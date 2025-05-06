@@ -1,10 +1,18 @@
 package es.uji.al435137.mvc.model;
 
+import es.uji.al435137.algorithms.distance.Distance;
+import es.uji.al435137.mvc.view.View;
+import javafx.collections.ObservableList;
+
+import java.io.FileNotFoundException;
+import java.net.URISyntaxException;
+import java.util.List;
+
 public interface Model {
-    void trainKmeans(); // Método para entrenar el modelo
-    void generateMoreRecommendations(); // Método para generar más recomendaciones
+    void setAlgorithm(int algorithmType, int distanceType) throws FileNotFoundException, URISyntaxException;
+    void calculateRecommendations(String nameLikedItem, int numRecommendations);
+    ObservableList<String> getSongsList();
+    List<String> getRecommendations();
 
-    void setAlgorithm(int tipoAlgoritmo, int tipoDistancia);
-
-    void calculateRecommendations(String cancion, int i);
+    void setVista(View view);
 }

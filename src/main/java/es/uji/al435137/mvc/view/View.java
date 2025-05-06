@@ -5,11 +5,14 @@ import es.uji.al435137.mvc.model.Model;
 import javafx.stage.Stage;
 
 public interface View {
-    public void setControlador(Controller controlador);
-
-    public void setModelo(Model modelo);
-
-    public void createGUI(Stage stage);
+    void setControlador(Controller controlador);
+    void setModelo(Model modelo);
+    void createGUI(Stage stage);
 
     int getAlgorithm();
+    int getDistance();
+    String getSelectedSong();
+    int getRecommendationsAmount();
+
+    void notifyNewRecommendations();
 }

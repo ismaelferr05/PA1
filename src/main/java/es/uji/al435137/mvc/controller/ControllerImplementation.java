@@ -2,6 +2,7 @@ package es.uji.al435137.mvc.controller;
 
 import es.uji.al435137.mvc.model.Model;
 import es.uji.al435137.mvc.view.View;
+import es.uji.al435137.mvc.view.ViewImplementation;
 
 public class ControllerImplementation implements Controller {
     private Model model;
@@ -11,17 +12,21 @@ public class ControllerImplementation implements Controller {
         this.model = modelo;
     }
 
-    public void setVista(View vista) {
-        this.view = vista;
+    public void setVista(View view) {
+        this.view = view;
     }
 
     @Override
-    public void trainRecommendations(){
+    public void trainRecommendations() {
         int tipoAlgoritmo = view.getAlgorithm();
         int tipoDistancia = view.getDistance();
         String cancion = view.getSelectedSong();
-        model.setAlgorithm(tipoAlgoritmo,tipoDistancia);
-        model.calculateRecommendations(cancion, 30);
+        try {
+            model.setAlgorithm(tipoAlgoritmo, tipoDistancia);
+            model.calculateRecommendations(cancion, 30);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

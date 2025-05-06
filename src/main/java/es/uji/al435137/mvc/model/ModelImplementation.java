@@ -2,74 +2,135 @@ package es.uji.al435137.mvc.model;
 
 import es.uji.al435137.algorithms.Algorithm;
 import es.uji.al435137.algorithms.KMeans;
+import es.uji.al435137.algorithms.KNN;
 import es.uji.al435137.algorithms.distance.Distance;
 import es.uji.al435137.algorithms.distance.EuclideanDistance;
+import es.uji.al435137.algorithms.distance.ManhattanDistance;
 import es.uji.al435137.mvc.view.View;
+import es.uji.al435137.reading.FileReader.CSVUnlabeledFileReader;
+import es.uji.al435137.reading.FileReader.ReaderTemplate;
 import es.uji.al435137.reading.Table;
+import es.uji.al435137.reading.TableWithLabels;
+import es.uji.al435137.recommend.RecSys;
+import javafx.collections.FXCollections;
+
+import javafx.collections.ObservableList;
+
+import java.io.File;
+import java.util.Scanner;
+
+import java.util.List;
+import java.util.LinkedList;
+
+import java.io.FileNotFoundException;
+import java.net.URISyntaxException;
 
 public class ModelImplementation implements Model {
     private View view;
+    private ObservableList<String> songsList;
+    private List<String> recommendationsList;
+    private RecSys recsys_kMeansED;
+    private RecSys recsys_kMeansMD;
+    private RecSys recsys_knnED;
+    private RecSys recsys_knnMD;
+    private RecSys recsysActual;
 
-    public ModelImplementation(){
-
+    public ModelImplementation() throws FileNotFoundException {
+        songsList = convertFileToObservableList("datos/songs_test_names.csv");
     }
 
-    public void setVista(View vista) {
-        this.view = vista;
+    public void setVista(View view) {
+        this.view = view;
     }
 
     @Override
-    public void trainKmeans(Distance d) {
-        ReaderTemplate lector = new CSVUnlabeledFileReader();
-        Table trainTable = lector.readTableFromSource("datos/songs_train_withoutnames.csv");
-        Table testTable = lector.readTableFromSource("datos/songs_test_withoutnames.csv");
+    public ObservableList<String> getSongsList(){
+        return songsList;
+    }
 
-        Algorithm KMeans = new Kmeans(d,15,50,43422);
+    private ObservableList<String> convertFileToObservableList(String file) throws FileNotFoundException {
+        ObservableList<String> listaOutput = FXCollections.observableArrayList();
+        Scanner sc = new Scanner(new File(file));
+        while(sc.hasNextLine()){
+            listaOutput.add(sc.nextLine());
+        }
 
-        RecSys recsys = new RecSys(KMeans);
+        return listaOutput;
+    }
 
+    public void trainKmeans(Distance d) throws FileNotFoundException, URISyntaxException{
+        ReaderTemplate<Table> lector1 = new CSVUnlabeledFileReader("datos/songs_train_withoutnames.csv");
+        ReaderTemplate<Table> lector2 = new CSVUnlabeledFileReader("datos/songs_test_withoutnames.csv");
+        Table trainTable = lector1.readTableFromSource();
+        Table testTable = lector2.readTableFromSource();
+
+        Algorithm<Table, Integer, List<Double>> kmeans = new KMeans(d, 15, 50, 43422);
+        RecSys<Table, Integer, List<Double>> recsys = new RecSys<>(kmeans);
         recsys.train(trainTable);
-        if(d.getClass() == EuclideanDistance.class){
+
+        if (d instanceof EuclideanDistance) {
             recsys_kMeansED = recsys;
-        } else if(d.getClass() == ManhattanDistance.class){
+        } else if (d instanceof ManhattanDistance) {
             recsys_kMeansMD = recsys;
         }
     }
 
+    public void trainKnn(Distance d) throws FileNotFoundException, URISyntaxException {
+        ReaderTemplate<Table> lector1 = new CSVUnlabeledFileReader("datos/songs_train_withoutnames.csv");
+        ReaderTemplate<Table> lector2 = new CSVUnlabeledFileReader("datos/songs_test_withoutnames.csv");
+        Table trainTable = lector1.readTableFromSource();
+        Table testTable = lector2.readTableFromSource();
 
-    Public void trainK1nn
-    @Override
-    public void generateMoreRecommendations() {
+        Algorithm<TableWithLabels, Integer, List<Double>> knn = new KNN(d);
+        RecSys<TableWithLabels, Integer, List<Double>> recsys = new RecSys<>(knn);
+        recsys.train(trainTable);
 
-    }
-
-    @Override
-    public void setAlgorithm(int algorithmType, int distanceType) {
-        if (algorithmType == 0) {
-            if (distanceType == 0) {
-                trainKmeans(new EuclideanDistance());
-                recsysActual = recsys_kMeansED;
-            } else if (distanceType == 1) {
-                trainKmeans(new ManhattanDistance());
-                recsysActual = recsys_kMeansMD;
-            }
-        } else if (algorithmType == 1) {
-            if (distanceType == 0) {
-                trainK1nn(new EuclideanDistance());
-                recsysActual = recsys_k1nnED;
-            } else if (distanceType == 1) {
-                trainK1nn(new ManhattanDistance());
-                recsysActual = recsys_k1nnMD;
-            }
+        if (d instanceof EuclideanDistance) {
+            recsys_knnED = recsys;
+        } else if (d instanceof ManhattanDistance) {
+            recsys_knnMD = recsys;
         }
 
     }
 
-
-
+    @Override
+    public void setAlgorithm(int algorithmType, int distanceType) throws FileNotFoundException, URISyntaxException {
+        if (algorithmType == 0) {
+            if (distanceType == 0) {
+                trainKmeans(new EuclideanDistance());
+                recsysActual = recsys_kMeansED;
+            } else {
+                trainKmeans(new ManhattanDistance());
+                recsysActual = recsys_kMeansMD;
+            }
+        } else {
+            if (distanceType == 0) {
+                trainKnn(new EuclideanDistance());
+                recsysActual = recsys_knnED;
+            } else {
+                trainKnn(new ManhattanDistance());
+                recsysActual = recsys_knnMD;
+            }
+        }
+    }
 
     @Override
-    public void calculateRecommendations(String cancion, int i) {
+    public void calculateRecommendations(String nameLikedItem, int numRecommendations) {
+        recommendationsList = recsysActual.recommend(nameLikedItem, numRecommendations);
+        view.notifyNewRecommendations();
+    }
 
+    @Override
+    public List<String> getRecommendations() {
+        return recommendationsList;
+    }
+
+    private List<String> convertFileToList(String file) throws FileNotFoundException {
+        List<String> listaOutput = new LinkedList<>();
+        Scanner sc = new Scanner(new File(file));
+        while(sc.hasNextLine()){
+            listaOutput.add(sc.nextLine());
+        }
+        return listaOutput;
     }
 }
