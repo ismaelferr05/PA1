@@ -11,5 +11,5 @@ public interface View {
 
     public void createGUI(Stage stage);
 
-
+    int getAlgorithm();
 }
