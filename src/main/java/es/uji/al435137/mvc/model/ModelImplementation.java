@@ -36,7 +36,7 @@ public class ModelImplementation implements Model {
     private RecSys recsysActual;
 
     public ModelImplementation() throws FileNotFoundException {
-        songsList = convertFileToObservableList("datos/songs_test_names.csv");
+        songsList = convertFileToObservableList("resources/recommend/songs_test_names.csv");
     }
 
     public void setVista(View view) {
@@ -59,8 +59,8 @@ public class ModelImplementation implements Model {
     }
 
     public void trainKmeans(Distance d) throws FileNotFoundException, URISyntaxException{
-        ReaderTemplate<Table> lector1 = new CSVUnlabeledFileReader("datos/songs_train_withoutnames.csv");
-        ReaderTemplate<Table> lector2 = new CSVUnlabeledFileReader("datos/songs_test_withoutnames.csv");
+        ReaderTemplate<Table> lector1 = new CSVUnlabeledFileReader("resources/recomend/songs_train_withoutnames.csv");
+        ReaderTemplate<Table> lector2 = new CSVUnlabeledFileReader("resources/recommend/songs_test_withoutnames.csv");
         Table trainTable = lector1.readTableFromSource();
         Table testTable = lector2.readTableFromSource();
 
@@ -76,8 +76,8 @@ public class ModelImplementation implements Model {
     }
 
     public void trainKnn(Distance d) throws FileNotFoundException, URISyntaxException {
-        ReaderTemplate<Table> lector1 = new CSVUnlabeledFileReader("datos/songs_train_withoutnames.csv");
-        ReaderTemplate<Table> lector2 = new CSVUnlabeledFileReader("datos/songs_test_withoutnames.csv");
+        ReaderTemplate<Table> lector1 = new CSVUnlabeledFileReader("resources/recommend/songs_train_withoutnames.csv");
+        ReaderTemplate<Table> lector2 = new CSVUnlabeledFileReader("resources/recommend/songs_test_withoutnames.csv");
         Table trainTable = lector1.readTableFromSource();
         Table testTable = lector2.readTableFromSource();
 
