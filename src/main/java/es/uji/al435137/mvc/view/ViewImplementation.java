@@ -5,6 +5,7 @@ import es.uji.al435137.mvc.model.Model;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.collections.ObservableList;
@@ -49,21 +50,23 @@ public class ViewImplementation implements View {
         songsListView = new ListView<>();
         ObservableList<String> songs = model.getSongsList();
         songsListView.setItems(songs);
-        songsListView.setMaxHeight(100);
+        VBox.setVgrow(songsListView, Priority.ALWAYS);
 
         trainButton = new Button("Train and Recommend");
         trainButton.setOnAction(e -> controller.trainRecommendations());
 
         statusLabel = new Label();
+        statusLabel.setWrapText(true);
+        statusLabel.setMaxWidth(350);
 
         recommendationsListView = new ListView<>();
-        recommendationsListView.setMaxHeight(150);
+        VBox.setVgrow(songsListView, Priority.ALWAYS);
 
         root.getChildren().addAll(
                 new Label("Algorithm:"), algorithmChoice,
                 new Label("Distance:"), distanceChoice,
                 new Label("Number of recommendations:"), amountField,
-                new Label("Selected song:"), songsListView, trainButton, statusLabel,
+                new Label("Select a song:"), songsListView, trainButton, statusLabel,
                 new Label("Recommendations:"), recommendationsListView
         );
 
@@ -109,12 +112,14 @@ public class ViewImplementation implements View {
 
     @Override
     public void notifyNewRecommendations() {
+
         recommendationsListView.getItems().setAll(model.getRecommendations());
     }
 
-    public void showError(String message) {
-        statusLabel.setText(message);
+    public void setText(String text){
+        statusLabel.setText(text);
     }
+
     @Override
     public void clearError() {
         statusLabel.setText("");

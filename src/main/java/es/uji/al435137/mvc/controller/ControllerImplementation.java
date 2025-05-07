@@ -22,16 +22,18 @@ public class ControllerImplementation implements Controller {
         int amount = view.getRecommendationsAmount();
         String song = view.getSelectedSong();
         if (amount <= 0) {
-            view.showError("Enter a valid number of recommendations.");
+            view.setText("Enter a valid number of recommendations.");
         }else{
             if (song == null || song.isEmpty()) {
-                view.showError("You must select a song.");
+                view.setText("You must select a song.");
             }else{
                 view.clearError();
+                view.setText("Model trained. Generating recommendations...");
                 try {
                     model.setAlgorithm(algorithmType, distanceType);
                     model.calculateRecommendations(song, amount);
                 } catch (Exception e) {
+                    view.setText("Error during training or recommendation: " + e.getMessage());
                     e.printStackTrace();
                 }
             }

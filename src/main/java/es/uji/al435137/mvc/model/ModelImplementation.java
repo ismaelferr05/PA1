@@ -36,6 +36,11 @@ public class ModelImplementation implements Model {
     private RecSys recsys_knnMD;
     private RecSys recsysActual;
 
+    private boolean isTrainedKMeansED = false;
+    private boolean isTrainedKMeansMD = false;
+    private boolean isTrainedKNNED = false;
+    private boolean isTrainedKNNMD = false;
+
     public ModelImplementation() throws FileNotFoundException, URISyntaxException {
         songsList = convertFileToObservableList("recommends/songs_test_names.csv");
     }
@@ -102,20 +107,40 @@ public class ModelImplementation implements Model {
 
     @Override
     public void setAlgorithm(int algorithmType, int distanceType) throws FileNotFoundException, URISyntaxException {
-        if (algorithmType == 0) {
-            if (distanceType == 0) {
-                trainKmeans(new EuclideanDistance());
+        if (algorithmType == 0) { //K-Means
+            if (distanceType == 0) {//Euclidean
+                if (!isTrainedKMeansED) {
+                    trainKmeans(new EuclideanDistance());
+                    isTrainedKMeansED = true;
+                } else {
+                    view.setText("K-Means with Euclidean distance is already trained. Generating recommendations...");
+                }
                 recsysActual = recsys_kMeansED;
-            } else {
-                trainKmeans(new ManhattanDistance());
+            } else {//Manhattan
+                if (!isTrainedKMeansMD) {
+                    trainKmeans(new ManhattanDistance());
+                    isTrainedKMeansMD = true;
+                } else {
+                    view.setText("K-Means with Manhattan distance is already trained. Generating recommendations...");
+                }
                 recsysActual = recsys_kMeansMD;
             }
-        } else {
-            if (distanceType == 0) {
-                trainKnn(new EuclideanDistance());
+        } else {//KNN
+            if (distanceType == 0) {//Euclidean
+                if (!isTrainedKNNED) {
+                    trainKnn(new EuclideanDistance());
+                    isTrainedKNNED = true;
+                } else {
+                    view.setText("KNN with Euclidean distance is already trained. Generating recommendations...");
+                }
                 recsysActual = recsys_knnED;
-            } else {
-                trainKnn(new ManhattanDistance());
+            } else {// Manhattan
+                if (!isTrainedKNNMD) {
+                    trainKnn(new ManhattanDistance());
+                    isTrainedKNNMD = true;
+                } else {
+                    view.setText("KNN with Manhattan distance is already trained. Generating recommendations...");
+                }
                 recsysActual = recsys_knnMD;
             }
         }
