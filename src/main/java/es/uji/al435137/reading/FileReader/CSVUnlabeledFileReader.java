@@ -26,14 +26,12 @@ public class CSVUnlabeledFileReader extends FileReader<Table> {
         table.setHeaders(headerList);
     }
 
-    //Procesa cada linea de datos del archivo CSV
+    //Procesa cada línea de datos del archivo CSV
     @Override
     void processData(String data) {
         String[] values = data.split(",");
-        List<Double> rowData = new ArrayList<>();
-        for (String value : values) {
-            rowData.add(Double.parseDouble(value));
-        }
-        table.addRow(new Row(rowData));
+        List<Double> numericalValues = extractNumericalValues(values, values.length);
+        table.addRow(new Row(numericalValues));
     }
+
 }

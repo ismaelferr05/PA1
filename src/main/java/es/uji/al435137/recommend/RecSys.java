@@ -1,10 +1,13 @@
 package es.uji.al435137.recommend;
+
 import es.uji.al435137.algorithms.Algorithm;
 import es.uji.al435137.reading.Table;
 import es.uji.al435137.algorithms.LikedItemNotFoundException;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class RecSys<T extends Table, G, H> {
     private Algorithm<T, G, H> algorithm;
@@ -45,12 +48,17 @@ public class RecSys<T extends Table, G, H> {
         G likedPrediction = predictions.get(indexLikedItem);
 
         List<String> recommendations = new ArrayList<>();
+        Set<String> uniqueRecommendations = new HashSet<>();
+        uniqueRecommendations.add(nameLikedItem);
         int count = 0;
 
         for (int i = 0; i < predictions.size() && count < numRecommendations; i++) {
             if (i != indexLikedItem && predictions.get(i).equals(likedPrediction)) {
-                recommendations.add(testItemNames.get(i));
-                count++;
+                String recommendation = testItemNames.get(i);
+                if (uniqueRecommendations.add(recommendation)) { // Solo añade si no está en el conjunto
+                    recommendations.add(recommendation);
+                    count++;
+                }
             }
         }
         return recommendations;

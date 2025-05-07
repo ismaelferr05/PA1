@@ -84,7 +84,7 @@ public class ViewImplementation implements View {
 
     @Override
     public int getDistance() {
-        if(distanceChoice.getValue().equals("K-Means")){
+        if(distanceChoice.getValue().equals("Euclidean")){
             return 0;
         }else{
             return 1;

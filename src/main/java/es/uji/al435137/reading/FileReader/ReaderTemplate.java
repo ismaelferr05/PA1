@@ -14,7 +14,7 @@ public abstract class ReaderTemplate<T extends Table> {
         this.source = source;
     }
 
-    abstract void openSource(String source) throws FileNotFoundException;
+    abstract void openSource(String source) throws FileNotFoundException, URISyntaxException;
     abstract void processHeaders(String headers);
     abstract void processData(String data);
     abstract void closeSource();
@@ -24,7 +24,7 @@ public abstract class ReaderTemplate<T extends Table> {
 
     // El siguiente método abre el recurso, inserta las cabeceras, lee e inserta los datos y finalmente cierra el recurso
     public final T readTableFromSource() throws FileNotFoundException, URISyntaxException {
-        openSource(getClass().getClassLoader().getResource(source).toURI().getPath());
+        openSource(source);
 
         if (hasMoreData())
             processHeaders(getNextData());

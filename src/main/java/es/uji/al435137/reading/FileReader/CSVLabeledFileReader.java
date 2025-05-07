@@ -1,4 +1,3 @@
-// Java
 package es.uji.al435137.reading.FileReader;
 
 import es.uji.al435137.reading.RowWithLabel;
@@ -14,7 +13,6 @@ public class CSVLabeledFileReader extends FileReader<TableWithLabels> {
     }
 
     //Procesa la primera linea del archivo CSV, que contiene los encabezados (headers)
-
     @Override
     void processHeaders(String headers) {
         this.table=new TableWithLabels();
@@ -27,10 +25,7 @@ public class CSVLabeledFileReader extends FileReader<TableWithLabels> {
     @Override
     void processData(String data) {
         String[] values = data.split(",");
-        List<Double> rowData = new ArrayList<>();
-        for (int i = 0; i < values.length - 1; i++) {
-            rowData.add(Double.parseDouble(values[i]));
-        }
-        table.addRow(new RowWithLabel(rowData, values[values.length - 1]));
+        List<Double> numericalValues = extractNumericalValues(values, values.length - 1);
+        table.addRow(new RowWithLabel(numericalValues, values[values.length - 1]));
     }
 }
