@@ -64,10 +64,12 @@ public class ViewImplementation implements View {
                 new Label("Distance:"), distanceChoice,
                 new Label("Number of recommendations:"), amountField,
                 new Label("Selected song:"), songsListView, trainButton, statusLabel,
-                new Label("Recomendations:"), recommendationsListView
+                new Label("Recommendations:"), recommendationsListView
         );
 
         Scene scene = new Scene(root, 400, 600);
+        scene.getStylesheets().add(getClass().getClassLoader().getResource("dark-theme.css").toExternalForm());
+
         stage.setTitle("Song Recommendation System");
         stage.setScene(scene);
         stage.show();
@@ -101,12 +103,20 @@ public class ViewImplementation implements View {
         try {
             return Integer.parseInt(amountField.getText());
         } catch (NumberFormatException e) {
-            return 1;
+            return 0;
         }
     }
 
     @Override
     public void notifyNewRecommendations() {
         recommendationsListView.getItems().setAll(model.getRecommendations());
+    }
+
+    public void showError(String message) {
+        statusLabel.setText(message);
+    }
+    @Override
+    public void clearError() {
+        statusLabel.setText("");
     }
 }

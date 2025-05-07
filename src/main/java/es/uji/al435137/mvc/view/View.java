@@ -13,6 +13,8 @@ public interface View {
     int getDistance();
     String getSelectedSong();
     int getRecommendationsAmount();
-
     void notifyNewRecommendations();
+
+    void showError(String s);
+    void clearError();
 }

@@ -1,0 +1,176 @@
+.root {
+    -fx-background-color: #1e3a5f;
+    -fx-padding: 20;
+}
+
+.label {
+    -fx-text-fill: #d0e6f6;
+    -fx-font-size: 14;
+}
+
+/* Estilos básicos para ChoiceBox */
+.choice-box {
+    -fx-background-color: #2b4a73;
+    -fx-text-fill: #d0e6f6;
+    -fx-border-color: #3c5a8c;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
+
+.choice-box .list-cell {
+    -fx-background-color: #2b4a73;
+    -fx-text-fill: #d0e6f6;
+}
+
+.choice-box .list-cell:selected {
+    -fx-background-color: #4d6b9f;
+    -fx-text-fill: #ffffff;
+}
+
+.text-field {
+    -fx-background-color: #2b4a73;
+    -fx-text-fill: #d0e6f6;
+    -fx-prompt-text-fill: #a3c2e2;
+    -fx-border-color: #3c5a8c;
+}
+
+/* Estilos específicos para ListView */
+.list-view {
+    -fx-background-color: #2b4a73;
+    -fx-text-fill: #d0e6f6;
+    -fx-border-color: #3c5a8c;
+}
+
+.list-view .list-cell {
+    -fx-background-color: #2b4a73;
+    -fx-text-fill: #d0e6f6;
+}
+
+/* Importante: aseguramos que la selección se vea correctamente */
+.list-view .list-cell:selected {
+    -fx-background-color: #4d6b9f !important;
+    -fx-text-fill: #ffffff !important;
+}
+
+.button {
+    -fx-background-color: #3c5a8c;
+    -fx-text-fill: #d0e6f6;
+    -fx-border-color: #2b4a73;
+}
+
+.button:hover {
+    -fx-background-color: #4d6b9f;
+}
+
+.button:pressed {
+    -fx-background-color: #2b4a73;
+}
+
+/* Solución para el popup de ChoiceBox */
+.choice-box .context-menu,
+.choice-box > .context-menu {
+    -fx-background-color: transparent !important;
+    -fx-border-color: transparent !important;
+    -fx-padding: 0 !important;
+    -fx-effect: null !important;
+    -fx-min-height: 0 !important;
+    -fx-pref-height: -1 !important;
+    -fx-max-height: -1 !important;
+    -fx-min-width: 0 !important;
+    -fx-pref-width: -1 !important;
+    -fx-max-width: -1 !important;
+    -fx-background-insets: 0 !important;
+    -fx-border-insets: 0 !important;
+}
+
+/* Solución específica para desplegables */
+.choice-box-popup {
+    -fx-background-color: transparent !important;
+    -fx-padding: 0 !important;
+    -fx-background-insets: 0 !important;
+    -fx-border-width: 0 !important;
+    -fx-effect: null !important;
+}
+
+/* Menú contexto general (solo para choice-box) */
+.choice-box .context-menu {
+    -fx-background-color: transparent !important;
+    -fx-padding: 0 !important;
+    -fx-border-width: 0 !important;
+    -fx-background-insets: 0 !important;
+    -fx-effect: null !important;
+    -fx-pref-width: -1 !important;
+    -fx-pref-height: -1 !important;
+}
+
+/* Contenedores internos de choice-box */
+.choice-box .context-menu .container,
+.choice-box .context-menu > * {
+    -fx-background-color: transparent !important;
+    -fx-padding: 0 !important;
+    -fx-background-insets: 0 !important;
+    -fx-border-width: 0 !important;
+    -fx-pref-height: -1 !important;
+}
+
+/* Items de menú desplegable */
+.menu-item {
+    -fx-background-color: #2b4a73;
+    -fx-padding: 4 8 4 8;
+}
+
+.menu-item:focused {
+    -fx-background-color: #4d6b9f;
+}
+
+.menu-item > .label {
+    -fx-text-fill: #d0e6f6;
+}
+
+.menu-item:focused > .label {
+    -fx-text-fill: #ffffff;
+}
+
+/* Contenedores internos (solo para choice-box) */
+.choice-box .scroll-pane,
+.choice-box .scroll-pane > .viewport,
+.choice-box .scroll-pane > .corner,
+.choice-box .scroll-bar,
+.choice-box .virtual-flow,
+.choice-box .virtual-flow > .clipped-container,
+.choice-box .virtual-flow > .clipped-container > .sheet,
+.choice-box .virtual-flow > .clipped-container > .sheet > * {
+    -fx-background-color: transparent !important;
+    -fx-padding: 0 !important;
+    -fx-background-insets: 0 !important;
+    -fx-border-width: 0 !important;
+    -fx-effect: null !important;
+}
+
+/* Botón de flecha */
+.choice-box > .arrow-button {
+    -fx-background-color: #2b4a73;
+}
+
+.choice-box > .arrow-button > .arrow {
+    -fx-background-color: #d0e6f6;
+}
+
+/* Contenedores de menú item */
+.menu-item > .graphic-container,
+.menu-item > .content {
+    -fx-background-color: #2b4a73;
+}
+
+.menu-item:focused > .graphic-container,
+.menu-item:focused > .content {
+    -fx-background-color: #4d6b9f;
+}
+
+/* Forzar eliminación de sombras en popups */
+.popup,
+.popup > *,
+.popup-shadow {
+    -fx-effect: null !important;
+    -fx-background-color: transparent !important;
+}
