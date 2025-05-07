@@ -113,7 +113,7 @@ public class ModelImplementation implements Model {
                     trainKmeans(new EuclideanDistance());
                     isTrainedKMeansED = true;
                 } else {
-                    view.setText("K-Means with Euclidean distance is already trained. Generating recommendations...");
+                    view.setText("K-Means with Euclidean distance is already trained.\nGenerating recommendations...");
                 }
                 recsysActual = recsys_kMeansED;
             } else {//Manhattan
@@ -121,7 +121,7 @@ public class ModelImplementation implements Model {
                     trainKmeans(new ManhattanDistance());
                     isTrainedKMeansMD = true;
                 } else {
-                    view.setText("K-Means with Manhattan distance is already trained. Generating recommendations...");
+                    view.setText("K-Means with Manhattan distance is already trained.\nGenerating recommendations...");
                 }
                 recsysActual = recsys_kMeansMD;
             }
@@ -131,7 +131,7 @@ public class ModelImplementation implements Model {
                     trainKnn(new EuclideanDistance());
                     isTrainedKNNED = true;
                 } else {
-                    view.setText("KNN with Euclidean distance is already trained. Generating recommendations...");
+                    view.setText("KNN with Euclidean distance is already trained.\nGenerating recommendations...");
                 }
                 recsysActual = recsys_knnED;
             } else {// Manhattan
@@ -139,7 +139,7 @@ public class ModelImplementation implements Model {
                     trainKnn(new ManhattanDistance());
                     isTrainedKNNMD = true;
                 } else {
-                    view.setText("KNN with Manhattan distance is already trained. Generating recommendations...");
+                    view.setText("KNN with Manhattan distance is already trained.\nGenerating recommendations...");
                 }
                 recsysActual = recsys_knnMD;
             }

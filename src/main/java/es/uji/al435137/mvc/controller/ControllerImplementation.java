@@ -28,7 +28,7 @@ public class ControllerImplementation implements Controller {
                 view.setText("You must select a song.");
             }else{
                 view.clearError();
-                view.setText("Model trained. Generating recommendations...");
+                view.setText("Model trained successfully.\nGenerating recommendations...");
                 try {
                     model.setAlgorithm(algorithmType, distanceType);
                     model.calculateRecommendations(song, amount);

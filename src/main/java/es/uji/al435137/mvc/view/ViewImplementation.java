@@ -7,17 +7,22 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.collections.ObservableList;
+import javafx.scene.layout.Region;
 
 public class ViewImplementation implements View {
     private Controller controller;
     private Model model;
+
     private ChoiceBox<String> algorithmChoice;
     private ChoiceBox<String> distanceChoice;
+
     private TextField amountField;
     private Button trainButton;
     private Label statusLabel;
+
     private ListView<String> songsListView;
     private ListView<String> recommendationsListView;
 
@@ -57,7 +62,9 @@ public class ViewImplementation implements View {
 
         statusLabel = new Label();
         statusLabel.setWrapText(true);
-        statusLabel.setMaxWidth(350);
+        statusLabel.setMinHeight(Region.USE_PREF_SIZE);
+        statusLabel.setAlignment(Pos.CENTER);
+        statusLabel.setTextAlignment(TextAlignment.CENTER);
 
         recommendationsListView = new ListView<>();
         VBox.setVgrow(songsListView, Priority.ALWAYS);
