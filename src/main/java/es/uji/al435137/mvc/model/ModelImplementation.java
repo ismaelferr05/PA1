@@ -131,7 +131,7 @@ public class ModelImplementation implements Model {
                     trainKnn(new EuclideanDistance());
                     isTrainedKNNED = true;
                 } else {
-                    view.setText("KNN with Euclidean distance is already trained.\nGenerating recommendations...");
+                    view.setText("K-NN with Euclidean distance is already trained.\nGenerating recommendations...");
                 }
                 recsysActual = recsys_knnED;
             } else {// Manhattan
@@ -139,7 +139,7 @@ public class ModelImplementation implements Model {
                     trainKnn(new ManhattanDistance());
                     isTrainedKNNMD = true;
                 } else {
-                    view.setText("KNN with Manhattan distance is already trained.\nGenerating recommendations...");
+                    view.setText("K-NN with Manhattan distance is already trained.\nGenerating recommendations...");
                 }
                 recsysActual = recsys_knnMD;
             }
