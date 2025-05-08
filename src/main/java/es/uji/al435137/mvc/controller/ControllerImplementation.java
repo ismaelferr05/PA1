@@ -27,7 +27,7 @@ public class ControllerImplementation implements Controller {
             if (song == null || song.isEmpty()) {
                 view.setText("You must select a song.");
             }else{
-                view.clearError();
+                view.clearText();
                 view.setText("Model trained successfully.\nGenerating recommendations...");
                 try {
                     model.setAlgorithm(algorithmType, distanceType);

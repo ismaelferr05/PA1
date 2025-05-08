@@ -128,7 +128,7 @@ public class ViewImplementation implements View {
     }
 
     @Override
-    public void clearError() {
+    public void clearText() {
         statusLabel.setText("");
     }
 }

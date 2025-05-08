@@ -15,6 +15,6 @@ public interface View {
     int getRecommendationsAmount();
     void notifyNewRecommendations();
 
-    void clearError();
+    void clearText();
     void setText(String s);
 }
