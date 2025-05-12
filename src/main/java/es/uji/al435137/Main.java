@@ -23,11 +23,11 @@ public class Main extends Application {
 
             model.setVista(view);
 
-            view.setControlador(controller);
-            view.setModelo(model);
+            view.setController(controller);
+            view.setModel(model);
 
-            controller.setModelo(model);
-            controller.setVista(view);
+            controller.setModel(model);
+            controller.setView(view);
 
             view.createGUI(primaryStage);
         } catch (Exception e) {

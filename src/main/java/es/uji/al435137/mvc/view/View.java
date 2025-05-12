@@ -5,8 +5,8 @@ import es.uji.al435137.mvc.model.Model;
 import javafx.stage.Stage;
 
 public interface View {
-    void setControlador(Controller controlador);
-    void setModelo(Model modelo);
+    void setController(Controller controller);
+    void setModel(Model model);
     void createGUI(Stage stage);
 
     int getAlgorithm();

@@ -16,24 +16,27 @@ public class ViewImplementation implements View {
     private Controller controller;
     private Model model;
 
+    //Atributos relacionados con la eleccion de parametros
     private ChoiceBox<String> algorithmChoice;
     private ChoiceBox<String> distanceChoice;
 
+    // Componentes relacionados con la interacción principal del usuario
     private TextField amountField;
     private Button trainButton;
     private Label statusLabel;
 
+    // Componentes para mostrar listas de elementos
     private ListView<String> songsListView;
     private ListView<String> recommendationsListView;
 
     @Override
-    public void setControlador(Controller controlador) {
-        this.controller = controlador;
+    public void setController(Controller controller) {
+        this.controller = controller;
     }
 
     @Override
-    public void setModelo(Model modelo) {
-        this.model = modelo;
+    public void setModel(Model model) {
+        this.model = model;
     }
 
     @Override
@@ -52,11 +55,6 @@ public class ViewImplementation implements View {
         amountField = new TextField();
         amountField.setPromptText("Number of recommendations");
 
-        songsListView = new ListView<>();
-        ObservableList<String> songs = model.getSongsList();
-        songsListView.setItems(songs);
-        VBox.setVgrow(songsListView, Priority.ALWAYS);
-
         trainButton = new Button("Train and Recommend");
         trainButton.setOnAction(e -> controller.trainRecommendations());
 
@@ -66,8 +64,13 @@ public class ViewImplementation implements View {
         statusLabel.setAlignment(Pos.CENTER);
         statusLabel.setTextAlignment(TextAlignment.CENTER);
 
-        recommendationsListView = new ListView<>();
+        songsListView = new ListView<>();
+        ObservableList<String> songs = model.getSongsList();
+        songsListView.setItems(songs);
         VBox.setVgrow(songsListView, Priority.ALWAYS);
+
+        recommendationsListView = new ListView<>();
+        VBox.setVgrow(recommendationsListView, Priority.ALWAYS);
 
         root.getChildren().addAll(
                 new Label("Algorithm:"), algorithmChoice,

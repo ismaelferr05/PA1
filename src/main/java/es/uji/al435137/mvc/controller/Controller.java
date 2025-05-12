@@ -5,9 +5,8 @@ import es.uji.al435137.mvc.view.View;
 
 public interface Controller {
     void trainRecommendations();
-    void moreRecommendations();
 
-    void setModelo(Model model);
+    void setModel(Model model);
 
-    void setVista(View view);
+    void setView(View view);
 }

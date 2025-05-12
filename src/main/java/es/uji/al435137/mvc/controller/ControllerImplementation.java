@@ -7,11 +7,11 @@ public class ControllerImplementation implements Controller {
     private Model model;
     private View view;
 
-    public void setModelo(Model modelo) {
-        this.model = modelo;
+    public void setModel(Model model) {
+        this.model = model;
     }
 
-    public void setVista(View view) {
+    public void setView(View view) {
         this.view = view;
     }
 
@@ -38,11 +38,5 @@ public class ControllerImplementation implements Controller {
                 }
             }
         }
-    }
-
-    @Override
-    public void moreRecommendations() {
-        int recommendationsAmount = view.getRecommendationsAmount();
-        model.calculateRecommendations(view.getSelectedSong(), recommendationsAmount * 2);
     }
 }
